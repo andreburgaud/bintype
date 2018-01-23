@@ -2,13 +2,13 @@
 
 `bintype` is a `newLISP` script that determines if a Windows executable is a 32-bit or 64-bit executable. It simply uses the Win32 `GetBinaryType` function from the `kernell32` Windows DLL.
 
-For more information about `GetBinaryType`, consult the followng Microsoft documentation: https://msdn.microsoft.com/en-us/library/windows/desktop/aa364819(v=vs.85).aspx.
+For more information about `GetBinaryType`, consult the following Microsoft documentation: https://msdn.microsoft.com/en-us/library/windows/desktop/aa364819(v=vs.85).aspx.
 
 Standalone executables of `bintype` are available in the releases area: https://github.com/andreburgaud/bintype/releases
 
 ## Using as a Script
 
-`newLISP` needs to be installed on your Windows OS and available in the Windows PATH. In the `bintype` project directory:
+`newLISP` needs to be installed on your Windows OS and available in the Windows `PATH`. In the `bintype` project directory:
 
 ```
 C:/projects/bintype> newlisp bintype.lsp newlisp.exe
