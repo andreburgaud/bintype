@@ -1,4 +1,4 @@
-; $Id: color.lsp 552 2009-08-06 23:27:15Z andre $
+;; Wrapper around kernel32 functions to modify the console colors.
 
 (context 'color)
 

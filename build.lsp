@@ -8,8 +8,8 @@
 (constant 'NEWLISP-EXE  "newlisp.exe")
 
 (define (newlisp-missing)
-  (color:println-err "newLISP was not found in the PATH")
-  (color:println-err "You need to install newLISP from  at http://www.newlisp.org")
+  (color:println-err "newLISP was not found in PATH")
+  (color:println-err "You need to install newLISP from http://www.newlisp.org")
   (exit))
 
 ;; Validate presence of newLISP
@@ -17,7 +17,7 @@
 (setq res (! newlisp-cmd))
 (if-not
   (= 0 res) (newlisp-missing)
-  (color:println-ok "Good: newLISP was found on the PATH!"))
+  (color:println-ok "Good: newLISP was found in PATH!"))
 
 ;; Clean up empty lines or comments
 (define (process-line line out-file)
