@@ -13,7 +13,7 @@ Standalone executables of `bintype` are available in the releases area: https://
 ```
 C:/projects/bintype> newlisp bintype.lsp newlisp.exe
 
-                                 Bintype 1.0.0
+                                 Bintype 1.1.0
                          Copyright (C) 2018 Burgaud.com
                                  Andre Burgaud
 

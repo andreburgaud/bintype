@@ -3,7 +3,8 @@
 (load "color.lsp")
 
 ;; Constants
-(constant 'APP-VERSION "1.0.0")
+(constant 'APP-NAME    "bintype")
+(constant 'APP-VERSION "1.1.0")
 (constant 'APP-URL     "https://www.burgaud.com")
 
 (println)
@@ -12,7 +13,7 @@
   (+ (/ (- width (length str)) 2) (length str)))
 
 (define (app-header)
-  (setq title (string "Bintype " APP-VERSION))
+  (setq title (string APP-NAME " " APP-VERSION))
   (setq copyright "Copyright (C) 2018 Burgaud.com")
   (setq author "Andre Burgaud")
   (color:println-ok (format (string "%" (get-margin title) "s") title))
@@ -21,9 +22,9 @@
 
 (define (usage)
   (color:println-info "Usage:")
-  (println "  bintype <executable_name>")
+  (println "  " APP-NAME " <executable_name>")
   (println)
-  (println "  Example: bintype newlisp.exe")
+  (println "  Example: " APP-NAME " newlisp.exe")
   (println "  Note   : Does not work for DLLs"))
 
 (app-header)
@@ -45,7 +46,9 @@
 
 (if-not (file? app-name)
   (begin
-    (color:println-err (append "Error: File " app-name " does not exist."))
+    (color:print-intense app-name)
+    (print ": ")
+    (color:println-err "file not found.")
     (exit)))
 
 ;; http://msdn.microsoft.com/en-us/library/ms679360(v=vs.85).aspx
@@ -67,10 +70,12 @@
   (setq lpBinaryType 0)
   (if (= (GetBinaryTypeA file-name (address lpBinaryType)) 0) (
     (begin
-      (setq error (w32-get-last-error))
-      (if (= error 193)
-        (throw (format "Error: File %s is a DLL" file-name))
-        (throw (format "Error: Could not process file %s (error %d)" file-name error))))))
+      (setq err (w32-get-last-error))
+      (if (= err 193)
+        (throw (list "DLL" err)))
+      (if err
+        (throw (list "ERR" err))
+        (throw (list "ERR" "not executable, or unexepcted error"))))))
   lpBinaryType)
 
 (define (get-bin-type file-name)
@@ -84,16 +89,15 @@
     "64-bit Windows-based application"))
   (lst-bin-type (w32-get-binary-type file-name)))
 
+(color:print-intense app-name)
+(print ": ")
 (catch (get-bin-type app-name) 'res)
-(if (starts-with res "Error:")
-  (color:println-err res)
-  begin (
-    (color:print-intense app-name)
-    (println ": " res)))
-
-;; (if-not 
-;;   (catch (println (format "%s: %s" app-name (get-bin-type app-name))) 'error)
-;;   ;(color:println-err ((parse error "\n") 0)))
-;;   (color:println-err error ))
+(set 'err (match '("ERR" ?) res))
+(if err
+  (color:println-err (err 0)))
+(set 'dll (match '("DLL" ?) res))
+(if dll
+  (println (format (string APP-NAME " version " APP-VERSION " can't process DLL's (error %d)") (dll 0)))
+  (println res))
 
 (exit)
