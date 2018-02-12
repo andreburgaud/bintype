@@ -44,8 +44,8 @@ C:/projects/bintype> dir *.exe
 
 * The source code of `Bintype` is released under the MIT license (see file [LICENSE](LICENSE.md)).
 * `newLISP` http://www.newlisp.org/ is distributed under a GPL v3 license.
-* `newLISP` allows to distribute the binary of the interpreter togeter with closed source http://www.newlisp.org/index.cgi?FAQ
-* The binary of the `newLISP` interpreter is distributed with the `Bintype` standalone executable available in the `Releases` area https://github.com/andreburgaud/bintype/releases.
+* `newLISP` allows to distribute the binary of the interpreter together with closed source http://www.newlisp.org/index.cgi?FAQ
+* The binary of the `newLISP` interpreter is embedded the `Bintype` standalone executable available in the `Releases` area https://github.com/andreburgaud/bintype/releases.
 
 ## Resources
 
