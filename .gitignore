@@ -1,1 +1,4 @@
 temp
+*.exe
+*.zip
+temp.lsp
