@@ -4,7 +4,7 @@
 
 ;; Constants
 (constant 'APP-NAME    "bintype")
-(constant 'APP-VERSION "1.1.0")
+(constant 'APP-VERSION "1.2.0")
 (constant 'APP-URL     "https://www.burgaud.com")
 
 (println)
@@ -14,7 +14,7 @@
 
 (define (app-header)
   (setq title (string APP-NAME " " APP-VERSION))
-  (setq copyright "Copyright (C) 2018 Burgaud.com")
+  (setq copyright "Copyright (C) 2018-2023 Burgaud.com")
   (setq author "Andre Burgaud")
   (color:println-ok (format (string "%" (get-margin title) "s") title))
   (color:println-ok (format (string "%" (get-margin copyright) "s") copyright))
@@ -33,7 +33,7 @@
 ;; Command line parameters
 ;; When built as a standalone script, (main-args 1) is the first parameter.
 ;; When executed via the interpreter (newlisp bintype.lsp), (main-args 1) is the script (bintype.lsp)
-(if (= (main-args 0) "bintype")
+(if (ends-with (main-args 0) "bintype|bintype.exe" 1)
   (setq i 1)
   (setq i 2))
 
