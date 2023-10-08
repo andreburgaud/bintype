@@ -2,7 +2,7 @@ BUILD_DIR := "build"
 DIST_DIR := "dist"
 APP := "bintype"
 APP_BIN := APP + ".exe"
-VERSION := "1.2.0"
+VERSION := "1.3.0"
 
 # Default recipe (this list)
 default:

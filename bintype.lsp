@@ -4,10 +4,8 @@
 
 ;; Constants
 (constant 'APP-NAME    "bintype")
-(constant 'APP-VERSION "1.2.0")
+(constant 'APP-VERSION "1.3.0")
 (constant 'APP-URL     "https://www.burgaud.com")
-
-(println)
 
 (define (get-margin str (width 80))
   (+ (/ (- width (length str)) 2) (length str)))
@@ -21,14 +19,20 @@
   (color:println-ok (format (string "%" (get-margin author) "s") author)))
 
 (define (usage)
-  (color:println-info "Usage:")
-  (println "  " APP-NAME " <executable_name>")
+  (app-header)
+  (color:println-info "USAGE:")
+  (println "  " APP-NAME " [FLAGS] <executable>")
   (println)
-  (println "  Example: " APP-NAME " newlisp.exe")
+  (color:println-info "FLAGS:")
+  (println "  --help      Display this help")
+  (println "  --version   Show application version")
+  (println)
+  (color:println-info "EXAMPLES:")
+  (println "  " APP-NAME " newlisp.exe")
   (println "  Note   : Does not work for DLLs"))
 
-(app-header)
-(println)
+(define (version)
+  (color:println-info (string APP-NAME " " APP-VERSION)))
 
 ;; Command line parameters
 ;; When built as a standalone script, (main-args 1) is the first parameter.
@@ -42,14 +46,34 @@
 (unless (> (length app-name) 0)
   (begin
     (usage)
+    (exit 1)))
+
+;; -h does not work when the runtime is embedded (exe) as with -h
+;; newlisp does not initiate anything (no init.lsp) and goes straight to its usage
+(if-not (nil? (find app-name '("--help")))
+  (begin
+    (usage)
     (exit)))
+
+(if-not (nil? (find app-name '("--version")))
+  (begin
+    (version)
+    (exit)))
+
+(if (starts-with app-name "-")
+  (begin
+    (color:println-err (string "Unexpected option " app-name ". Try " APP-NAME " --help."))
+    (exit 1)))
+
+(app-header)
+(println)
 
 (if-not (file? app-name)
   (begin
     (color:print-intense app-name)
     (print ": ")
     (color:println-err "file not found.")
-    (exit)))
+    (exit 1)))
 
 ;; http://msdn.microsoft.com/en-us/library/ms679360(v=vs.85).aspx
 ;; DWORD WINAPI GetLastError(void);
